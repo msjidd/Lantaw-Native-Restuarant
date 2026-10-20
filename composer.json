@@ -1,0 +1,14 @@
+{
+    "name": "lantaw/analytics",
+    "description": "Lantaw Native Restaurant – Business Analytics System (BSIT final project)",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0",
+        "phpoffice/phpspreadsheet": "^5.10"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Lantaw Analytics – Lantaw Native Restaurant – Cordova, Cebu">
+<title>Dashboard · Lantaw Analytics</title>
+<link rel="stylesheet" href="/Lantaw%20Native%20Restaurant/lantaw-analytics/assets/vendor/bootstrap.min.css">
+<link rel="stylesheet" href="/Lantaw%20Native%20Restaurant/lantaw-analytics/assets/css/style.css">
+<script>
+window.APP_URL = "/Lantaw%20Native%20Restaurant/lantaw-analytics";
+window.CSRF_TOKEN = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+</script>
+<script src="/Lantaw%20Native%20Restaurant/lantaw-analytics/assets/vendor/bootstrap.bundle.min.js" defer></script>
+<script src="/Lantaw%20Native%20Restaurant/lantaw-analytics/assets/vendor/chart.umd.min.js" defer></script>
+<script src="/Lantaw%20Native%20Restaurant/lantaw-analytics/assets/vendor/lucide.min.js" defer></script>
+<script src="/Lantaw%20Native%20Restaurant/lantaw-analytics/assets/js/app.js" defer></script>
+</head>
+<body>
+<aside class="sidebar" id="appSidebar">
+    <div class="sidebar-brand">
+        <div class="brand-mark">L</div>
+        <div class="brand-text">
+            <strong>LANTAW</strong>
+            <span>ANALYTICS</span>
+        </div>
+    </div>
+
+    <div class="sidebar-section">Main menu</div>
+    <nav class="sidebar-nav">
+                    <a class="nav-link-item active"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/dashboard.php">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/menu/index.php">
+                <i data-lucide="utensils-crossed"></i>
+                <span>Menu Management</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/index.php">
+                <i data-lucide="receipt-text"></i>
+                <span>Sales &amp; Transactions</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/analytics/descriptive.php">
+                <i data-lucide="bar-chart-3"></i>
+                <span>Descriptive Analytics</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/forecasting/index.php">
+                <i data-lucide="trending-up"></i>
+                <span>Predictive Analytics</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/recommendations/index.php">
+                <i data-lucide="lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/data-management/index.php">
+                <i data-lucide="file-spreadsheet"></i>
+                <span>Excel Import / Export</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/reports/index.php">
+                <i data-lucide="file-text"></i>
+                <span>Reports</span>
+            </a>
+                    <a class="nav-link-item"
+               href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/users/index.php">
+                <i data-lucide="users"></i>
+                <span>User Management</span>
+            </a>
+            </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-note">Lantaw Native Restaurant – Cordova, Cebu</div>
+        <div class="sidebar-note muted">Text-based project logo · unofficial academic build</div>
+    </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+<div class="main-wrap">
+    <header class="topbar">
+        <button class="icon-btn" id="sidebarToggle" type="button" aria-label="Toggle navigation">
+            <i data-lucide="menu"></i>
+        </button>
+        <div class="topbar-title">
+            <h1>Dashboard</h1>
+            <span class="topbar-sub">Lantaw Native Restaurant – Cordova, Cebu</span>
+        </div>
+        <div class="topbar-right">
+                            <span class="badge-simulated" title="Menu prices and sales rows are generated sample records">
+                    <i data-lucide="flask-conical"></i> Simulated sample data
+                </span>
+                                    <div class="dropdown">
+                <button class="user-chip" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar">S</span>
+                    <span class="user-meta">
+                        <strong>System Administrator</strong>
+                        <small>Admin</small>
+                    </span>
+                    <i data-lucide="chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                    <li class="dropdown-item-text small text-muted">
+                        Signed in as <strong>admin</strong>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form method="post" action="/Lantaw%20Native%20Restaurant/lantaw-analytics/logout.php" class="m-0">
+                            <input type="hidden" name="_csrf" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">                            <button class="dropdown-item" type="submit">
+                                <i data-lucide="log-out" class="me-1"></i> Sign out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        
+<div class="filter-bar">
+    <form method="get" action="dashboard.php" class="d-flex flex-wrap gap-2 align-items-end w-100">
+        <div class="field">
+            <label for="from">Date from</label>
+            <input class="form-control" type="date" id="from" name="from" value="2026-09-19" max="2026-10-19">
+        </div>
+        <div class="field">
+            <label for="to">Date to</label>
+            <input class="form-control" type="date" id="to" name="to" value="2026-10-19" max="2026-10-19">
+        </div>
+        <div class="field">
+            <label for="category">Category</label>
+            <select class="form-select" id="category" name="category">
+                <option value="">All categories</option>
+                                    <option value="Seafood">Seafood</option>
+                                    <option value="Meat">Meat</option>
+                                    <option value="Chicken">Chicken</option>
+                                    <option value="Vegetables">Vegetables</option>
+                                    <option value="Rice and Noodles">Rice and Noodles</option>
+                                    <option value="Beverages">Beverages</option>
+                                    <option value="Desserts">Desserts</option>
+                                    <option value="Other">Other</option>
+                            </select>
+        </div>
+        <div class="field">
+            <label for="order_type">Order type</label>
+            <select class="form-select" id="order_type" name="order_type">
+                <option value="">All types</option>
+                                    <option value="Dine-in">Dine-in</option>
+                                    <option value="Takeout">Takeout</option>
+                                    <option value="Delivery">Delivery</option>
+                            </select>
+        </div>
+        <div class="filter-actions">
+            <button class="btn btn-primary btn-icon" type="submit"><i data-lucide="filter"></i> Apply</button>
+            <a class="btn btn-light btn-icon" href="dashboard.php"><i data-lucide="rotate-ccw"></i> Reset</a>
+        </div>
+    </form>
+</div>
+
+    <div class="alert alert-warning py-2 mb-3" style="font-size:13px">
+        <strong>Simulated data:</strong> menu prices and sales records are generated sample data for this academic
+        build (477 orders, Jun 1, 2026 – Oct 18, 2026).
+        They are not actual Lantaw Native Restaurant sales.
+    </div>
+
+<div class="kpi-grid">
+    <div class="kpi" style="--kpi-color:#1565C0;--kpi-bg:#EAF4FF">
+        <div class="kpi-top">
+            <span class="kpi-label">Total Sales Revenue</span>
+            <span class="kpi-icon"><i data-lucide="peso"></i></span>
+        </div>
+        <div class="kpi-value">&#8369;107,755.00</div>
+        <div class="kpi-foot">Gross sales · Sep 19, 2026 – Oct 19, 2026 <span class="chip chip-up">&#8593; 12.2%</span></div>
+    </div>
+
+    <div class="kpi" style="--kpi-color:#16A34A;--kpi-bg:#E7F7EC">
+        <div class="kpi-top">
+            <span class="kpi-label">Completed Orders</span>
+            <span class="kpi-icon"><i data-lucide="receipt-text"></i></span>
+        </div>
+        <div class="kpi-value">102</div>
+        <div class="kpi-foot">Voided / cancelled orders excluded</div>
+    </div>
+
+    <div class="kpi" style="--kpi-color:#F59E0B;--kpi-bg:#FFF7E6">
+        <div class="kpi-top">
+            <span class="kpi-label">Total Items Sold</span>
+            <span class="kpi-icon"><i data-lucide="package"></i></span>
+        </div>
+        <div class="kpi-value">523</div>
+        <div class="kpi-foot">Sum of line quantities</div>
+    </div>
+
+    <div class="kpi" style="--kpi-color:#7C5CE0;--kpi-bg:#F1EDFF">
+        <div class="kpi-top">
+            <span class="kpi-label">Average Order Value</span>
+            <span class="kpi-icon"><i data-lucide="calculator"></i></span>
+        </div>
+        <div class="kpi-value">&#8369;1,056.42</div>
+        <div class="kpi-foot">Revenue ÷ completed orders</div>
+    </div>
+
+    <div class="kpi" style="--kpi-color:#2196F3;--kpi-bg:#EAF4FF">
+        <div class="kpi-top">
+            <span class="kpi-label">Best-Selling Item</span>
+            <span class="kpi-icon"><i data-lucide="award"></i></span>
+        </div>
+        <div class="kpi-value sm">Chicken Adobo</div>
+        <div class="kpi-foot">41 units · Chicken</div>
+    </div>
+
+    <div class="kpi" style="--kpi-color:#0B1F3A;--kpi-bg:#E4EAF3">
+        <div class="kpi-top">
+            <span class="kpi-label">Highest-Revenue Item</span>
+            <span class="kpi-icon"><i data-lucide="star"></i></span>
+        </div>
+        <div class="kpi-value sm">Grilled Tanigue</div>
+        <div class="kpi-foot">&#8369;13,860.00 · 33 units</div>
+    </div>
+</div>
+
+<div class="chart-grid mb-3">
+    <div class="card-box">
+        <div class="card-head">
+            <h4>Daily sales trend</h4>
+            <span class="hint">Sep 19, 2026 – Oct 19, 2026</span>
+        </div>
+        <div class="chart-box"><canvas id="chartDaily"></canvas></div>
+    </div>
+
+    <div class="card-box">
+        <div class="card-head">
+            <h4>Monthly sales trend</h4>
+            <span class="hint">12 months ending Oct 19, 2026</span>
+        </div>
+        <div class="chart-box"><canvas id="chartMonthly"></canvas></div>
+    </div>
+
+    <div class="card-box">
+        <div class="card-head">
+            <h4>Revenue by menu category</h4>
+            <span class="hint">All categories</span>
+        </div>
+        <div class="chart-box"><canvas id="chartCategory"></canvas></div>
+    </div>
+
+    <div class="card-box">
+        <div class="card-head">
+            <h4>Top 10 best-selling items</h4>
+            <span class="hint">Units sold</span>
+        </div>
+        <div class="chart-box"><canvas id="chartTop10"></canvas></div>
+    </div>
+</div>
+
+<div class="chart-grid mb-3">
+    <div class="card-box">
+        <div class="card-head">
+            <h4>Forecast versus actual sales</h4>
+            <span class="hint">3-period moving average · one-step-ahead estimate</span>
+        </div>
+                    <div class="chart-box"><canvas id="chartForecast"></canvas></div>
+            <p class="small-note mb-0">
+                Estimates are computed from historical daily sales using (latest + previous + two periods earlier) ÷ 3.
+                They are planning estimates, not guaranteed future results.
+            </p>
+            </div>
+
+    <div class="card-box">
+        <div class="card-head">
+            <h4>Business insights</h4>
+            <span class="hint">Calculated from the current filters</span>
+        </div>
+                    <div class="insight good">
+                <i data-lucide="trending-up"></i>
+                <div>
+                    <strong>Revenue increased by 12.2% versus the previous period</strong>
+                    <p>The selected 31-day window produced &amp;#8369;107,755.00 against &amp;#8369;96,065.00 in the comparable prior period (Aug 18, 2026 – Sep 18, 2026).</p>
+                </div>
+            </div>
+                    <div class="insight good">
+                <i data-lucide="trending-up"></i>
+                <div>
+                    <strong>Chicken Adobo leads volume with 41 units</strong>
+                    <p>That is 7.8% of all items sold in the period. Keep ingredients and stock aligned with this demand.</p>
+                </div>
+            </div>
+                    <div class="insight ">
+                <i data-lucide="lightbulb"></i>
+                <div>
+                    <strong>Seafood contributes 32.3% of revenue</strong>
+                    <p>Category revenue is &amp;#8369;34,820.00 of &amp;#8369;107,755.00 total. Review assortment and promotions for the remaining categories.</p>
+                </div>
+            </div>
+                    <div class="insight ">
+                <i data-lucide="lightbulb"></i>
+                <div>
+                    <strong>Dine-in is the dominant order type (58.8% of orders)</strong>
+                    <p>Use this when reviewing staffing, packaging inventory and delivery capacity.</p>
+                </div>
+            </div>
+                    <div class="insight warn">
+                <i data-lucide="triangle-alert"></i>
+                <div>
+                    <strong>Revenue is not profit</strong>
+                    <p>These figures are gross sales only. Profit can only be reported after verified ingredient cost data is recorded.</p>
+                </div>
+            </div>
+            </div>
+</div>
+
+<div class="card-box">
+    <div class="card-head">
+        <h4>Recent transactions</h4>
+        <a class="btn btn-sm btn-outline-primary btn-icon" href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/index.php">
+            <i data-lucide="arrow-right"></i> View all transactions
+        </a>
+    </div>
+            <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reference</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th class="num">Lines</th>
+                        <th class="num">Total</th>
+                        <th>Status</th>
+                        <th>Recorded by</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <td><strong>ORD-001477</strong></td>
+                            <td>Oct 18, 2026</td>
+                            <td>Dine-in</td>
+                            <td class="num">2</td>
+                            <td class="num">&#8369;700.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1477">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001476</strong></td>
+                            <td>Oct 18, 2026</td>
+                            <td>Takeout</td>
+                            <td class="num">3</td>
+                            <td class="num">&#8369;1,500.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1476">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001475</strong></td>
+                            <td>Oct 18, 2026</td>
+                            <td>Dine-in</td>
+                            <td class="num">4</td>
+                            <td class="num">&#8369;3,150.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1475">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001474</strong></td>
+                            <td>Oct 18, 2026</td>
+                            <td>Dine-in</td>
+                            <td class="num">4</td>
+                            <td class="num">&#8369;2,160.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1474">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001473</strong></td>
+                            <td>Oct 18, 2026</td>
+                            <td>Takeout</td>
+                            <td class="num">2</td>
+                            <td class="num">&#8369;520.00</td>
+                            <td><span class="badge bg-danger">Voided</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1473">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001472</strong></td>
+                            <td>Oct 17, 2026</td>
+                            <td>Dine-in</td>
+                            <td class="num">3</td>
+                            <td class="num">&#8369;1,970.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1472">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001471</strong></td>
+                            <td>Oct 17, 2026</td>
+                            <td>Takeout</td>
+                            <td class="num">1</td>
+                            <td class="num">&#8369;140.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1471">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><strong>ORD-001470</strong></td>
+                            <td>Oct 17, 2026</td>
+                            <td>Takeout</td>
+                            <td class="num">3</td>
+                            <td class="num">&#8369;1,040.00</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                            <td>System Administrator</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-light btn-icon"
+                                   href="/Lantaw%20Native%20Restaurant/lantaw-analytics/modules/sales/view.php?id=1470">
+                                    <i data-lucide="eye"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var money = function (v) { return '\u20B1' + Number(v).toLocaleString('en-PH', { maximumFractionDigits: 0 }); };
+
+    var dailyLabels = ["Sep 19","Sep 20","Sep 21","Sep 22","Sep 23","Sep 24","Sep 25","Sep 26","Sep 27","Sep 28","Sep 29","Sep 30","Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18"];
+    var dailyRevenue = [1980,4480,600,2140,3020,2220,2760,3730,2975,2545,2790,2365,5760,3580,5900,5070,930,2760,1700,4835,4655,6865,2640,2440,3660,2390,4765,5830,4860,7510];
+    var dailyOrders = [3,6,1,2,3,2,3,6,4,4,3,4,3,4,5,5,1,2,3,3,3,5,4,2,3,3,3,4,4,4];
+
+    if (document.getElementById('chartDaily')) {
+        new Chart(document.getElementById('chartDaily'), {
+            type: 'line',
+            data: {
+                labels: dailyLabels,
+                datasets: [
+                    { label: 'Daily revenue', data: dailyRevenue, borderColor: '#1565C0',
+                      backgroundColor: 'rgba(21,101,192,.12)', fill: true, tension: .32,
+                      pointRadius: dailyLabels.length > 45 ? 0 : 3, borderWidth: 2 },
+                    { label: 'Orders', data: dailyOrders, borderColor: '#F59E0B',
+                      backgroundColor: 'transparent', borderDash: [5, 4], tension: .32,
+                      pointRadius: 0, borderWidth: 1.6, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: { callbacks: { label: function (c) {
+                        return c.dataset.yAxisID === 'y1'
+                            ? c.dataset.label + ': ' + c.parsed.y + ' orders'
+                            : c.dataset.label + ': ' + money(c.parsed.y);
+                    } } }
+                },
+                scales: {
+                    y: { ticks: { callback: function (v) { return money(v); } }, beginAtZero: true },
+                    y1: { position: 'right', grid: { drawOnChartArea: false }, beginAtZero: true,
+                          ticks: { callback: function (v) { return v + ' ord'; } } },
+                    x: { ticks: { maxTicksLimit: 14, maxRotation: 45 } }
+                }
+            }
+        });
+    }
+
+    if (document.getElementById('chartMonthly')) {
+        new Chart(document.getElementById('chartMonthly'), {
+            type: 'bar',
+            data: {
+                labels: ["Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026","Apr 2026","May 2026","Jun 2026","Jul 2026","Aug 2026","Sep 2026","Oct 2026"],
+                datasets: [{ label: 'Monthly revenue', data: [0,0,0,0,0,0,0,108985,105530,103950,86105,76150],
+                    backgroundColor: '#2196F3', hoverBackgroundColor: '#1565C0',
+                    borderRadius: 6, maxBarThickness: 46 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false },
+                    tooltip: { callbacks: { label: function (c) { return 'Revenue: ' + money(c.parsed.y); } } } },
+                scales: { y: { beginAtZero: true, ticks: { callback: function (v) { return money(v); } } } }
+            }
+        });
+    }
+
+    if (document.getElementById('chartCategory')) {
+        var catLabels = ["Seafood","Chicken","Meat","Rice and Noodles","Vegetables","Beverages","Desserts"];
+        var catValues = [34820,24300,18670,11760,8790,4775,4640];
+        if (!catLabels.length) {
+            document.getElementById('chartCategory').parentNode.innerHTML =
+                '<div class="empty-state"><i data-lucide="pie-chart"></i><h5>No category data</h5>' +
+                '<p class="mb-0">No completed sales matched the current filters.</p></div>';
+            if (window.lucide) lucide.createIcons();
+        } else {
+            new Chart(document.getElementById('chartCategory'), {
+                type: 'doughnut',
+                data: {
+                    labels: catLabels,
+                    datasets: [{ data: catValues, backgroundColor: BluePalette, borderWidth: 2, borderColor: '#fff' }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '58%',
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: { callbacks: { label: function (c) {
+                            var total = c.dataset.data.reduce(function (a, b) { return a + b; }, 0);
+                            var pct = total ? (c.parsed / total * 100).toFixed(1) : 0;
+                            return c.label + ': ' + money(c.parsed) + ' (' + pct + '%)';
+                        } } }
+                    }
+                }
+            });
+        }
+    }
+
+    if (document.getElementById('chartTop10')) {
+        new Chart(document.getElementById('chartTop10'), {
+            type: 'bar',
+            data: {
+                labels: ["Chicken Adobo","Pancit Canton","Bottled Water","Grilled Tanigue","Chicken Inasal","Pork BBQ Skewers","Leche Flan","Bihon Guisado","Garlic Rice","Pork Sisig"],
+                datasets: [{ label: 'Units sold', data: [41,38,34,33,29,28,28,27,26,24],
+                    backgroundColor: '#1565C0', hoverBackgroundColor: '#2196F3', borderRadius: 6 }]
+            },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+    }
+
+    if (document.getElementById('chartForecast')) {
+        new Chart(document.getElementById('chartForecast'), {
+            type: 'line',
+            data: {
+                labels: ["Sep 22","Sep 23","Sep 24","Sep 25","Sep 26","Sep 27","Sep 28","Sep 29","Sep 30","Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18"],
+                datasets: [
+                    { label: 'Actual sales', data: [2140,3020,2220,2760,3730,2975,2545,2790,2365,5760,3580,5900,5070,930,2760,1700,4835,4655,6865,2640,2440,3660,2390,4765,5830,4860,7510], borderColor: '#0B1F3A',
+                      backgroundColor: 'transparent', tension: .3, pointRadius: 2.5, borderWidth: 2 },
+                    { label: '3-period moving average estimate', data: [2353.33,2406.67,1920,2460,2666.67,2903.33,3155,3083.33,2770,2566.67,3638.33,3901.67,5080,4850,3966.67,2920,1796.67,3098.33,3730,5451.67,4720,3981.67,2913.33,2830,3605,4328.33,5151.67],
+                      borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,.10)', fill: true,
+                      tension: .3, pointRadius: 0, borderDash: [6, 4], borderWidth: 2 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { position: 'bottom' },
+                    tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + money(c.parsed.y); } } } },
+                scales: { y: { beginAtZero: true, ticks: { callback: function (v) { return money(v); } } },
+                          x: { ticks: { maxTicksLimit: 12, maxRotation: 45 } } }
+            }
+        });
+    }
+});
+</script>
+
+    </main>
+    <footer class="app-footer">
+        <span>Lantaw Analytics · Lantaw Native Restaurant – Cordova, Cebu</span>
+        <span>BSIT 3rd-year capstone · PHP 8.2.12 · 2026</span>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[19-Oct-2026 16:45:08 Asia/Manila] [csrf] rejected request to /Lantaw%20Native%20Restaurant/lantaw-analytics/login.php
+[19-Oct-2026 16:45:08 Asia/Manila] [csrf] rejected request to /Lantaw%20Native%20Restaurant/lantaw-analytics/login.php
+[19-Oct-2026 16:51:39 Asia/Manila] [exception] TEST-LOG-PROBE internal details @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\_logtest_tmp.php:1
+[19-Oct-2026 16:54:38 Asia/Manila] [audit] failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`lantaw_analytics`.`audit_logs`, CONSTRAINT `fk_audit_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE)
+[20-Oct-2026 16:14:32 Asia/Manila] [exception] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.created_oy' in 'on clause' @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\config\database.php:62
+[20-Oct-2026 16:14:35 Asia/Manila] [exception] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.created_oy' in 'on clause' @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\config\database.php:62
+[20-Oct-2026 16:14:36 Asia/Manila] [exception] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.created_oy' in 'on clause' @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\config\database.php:62
+[20-Oct-2026 16:14:40 Asia/Manila] [exception] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.created_oy' in 'on clause' @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\config\database.php:62
+[20-Oct-2026 16:14:42 Asia/Manila] [exception] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.created_oy' in 'on clause' @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\config\database.php:62
+[20-Oct-2026 16:15:47 Asia/Manila] [exception] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.created_oy' in 'on clause' @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\config\database.php:62
+[20-Oct-2026 16:21:45 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:47 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:47 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:47 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:48 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:49 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:50 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
+[20-Oct-2026 16:21:51 Asia/Manila] [exception] Call to undefined function aos() @ C:\xampp\htdocs\Lantaw Native Restaurant\lantaw-analytics\dashboard.php:206
